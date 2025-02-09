@@ -13,16 +13,16 @@ import fs from "fs";
 import net from "net";
 import path from "path";
 import { fileURLToPath } from "url";
-import { initializeDbCache } from "./cache/index.ts";
+import { initializeDbCache } from './cache';
 import { character } from "./character.ts";
-import { startChat } from "./chat/index.ts";
-import { initializeClients } from "./clients/index.ts";
+import { startChat } from './chat';
+import { initializeClients } from './clients';
 import {
   getTokenForProvider,
   loadCharacters,
   parseArguments,
-} from "./config/index.ts";
-import { initializeDatabase } from "./database/index.ts";
+} from './config';
+import { initializeDatabase } from './database';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
