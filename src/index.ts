@@ -7,12 +7,12 @@ import fs from 'fs';
 import net from 'net';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { initializeDbCache } from './cache';
+import { initializeDbCache } from './cache/index.ts';
 import { character } from './character.ts';
-import { startChat } from './chat';
-import { initializeClients } from './clients';
-import { getTokenForProvider, loadCharacters, parseArguments } from './config';
-import { initializeDatabase } from './database';
+import { startChat } from './chat/index.ts';
+import { initializeClients } from './clients/index.ts';
+import { getTokenForProvider, loadCharacters, parseArguments } from './config/index.ts';
+import { initializeDatabase } from './database/index.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -50,23 +50,24 @@ async function startAgent(character: Character, directClient: DirectClient) {
     character.username ??= character.name;
 
     const token = getTokenForProvider(character.modelProvider, character);
-    const dataDir = path.join(__dirname, '../data');
 
+    elizaLogger.info(`Initializing data directory for character ${character.name}`);
+    const dataDir = path.join(__dirname, '../data');
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir, { recursive: true });
     }
 
+    elizaLogger.info(`Initializing database for character ${character.name} with data directory ${dataDir}`);
     const db = initializeDatabase(dataDir);
-
     await db.init();
 
+    elizaLogger.info(`Initializing cache for character ${character.name}`);
     const cache = initializeDbCache(character, db);
+
+    elizaLogger.info(`Initializing runtime for character ${character.name}`);
     const runtime = createAgent(character, db, cache, token);
-
     await runtime.initialize();
-
     runtime.clients = await initializeClients(character, runtime);
-
     directClient.registerAgent(runtime);
 
     // report to console

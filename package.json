@@ -13,11 +13,14 @@
     "stop:service:all": "pm2 stop all"
   },
   "dependencies": {
+    "@elizaos/adapter-mongodb": "0.25.6-alpha.1",
     "@elizaos/adapter-postgres": "0.1.9",
+    "@elizaos/adapter-qdrant": "0.25.6-alpha.1",
     "@elizaos/adapter-sqlite": "0.1.9",
     "@elizaos/client-auto": "0.1.9",
     "@elizaos/client-direct": "0.1.9",
     "@elizaos/client-discord": "0.1.9",
+    "@elizaos/client-slack": "^0.25.6-alpha.1",
     "@elizaos/client-telegram": "0.1.9",
     "@elizaos/client-twitter": "0.1.9",
     "@elizaos/core": "0.1.9",
@@ -28,7 +31,7 @@
     "@elizaos/plugin-starknet": "0.1.9",
     "@tavily/core": "0.0.2",
     "amqplib": "0.10.5",
-    "better-sqlite3": "11.5.0",
+    "better-sqlite3": "11.6.0",
     "fs": "0.0.1-security",
     "net": "1.0.2",
     "path": "0.12.7",
@@ -43,10 +46,35 @@
   "pnpm": {
     "overrides": {
       "onnxruntime-node": "1.20.0"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@discordjs/opus",
+      "@elizaos/plugin-node",
+      "better-sqlite3",
+      "bigint-buffer",
+      "bufferutil",
+      "canvas",
+      "es5-ext",
+      "esbuild",
+      "ffmpeg-static",
+      "keccak",
+      "node-hid",
+      "node-llama-cpp",
+      "onnxruntime-node",
+      "protobufjs",
+      "puppeteer",
+      "secp256k1",
+      "sharp",
+      "sodium-native",
+      "usb",
+      "utf-8-validate",
+      "wtf_wikipedia",
+      "youtube-dl-exec"
+    ]
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
+    "@types/better-sqlite3": "^7.6.12",
     "@typescript-eslint/eslint-plugin": "^8.23.0",
     "@typescript-eslint/parser": "^8.23.0",
     "eslint": "^9.20.0",

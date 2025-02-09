@@ -3,6 +3,7 @@ import { DiscordClientInterface } from '@elizaos/client-discord';
 import { TelegramClientInterface } from '@elizaos/client-telegram';
 import { TwitterClientInterface } from '@elizaos/client-twitter';
 import { Character, IAgentRuntime } from '@elizaos/core';
+import SlackClientInterface from '@elizaos/client-slack';
 
 export async function initializeClients(character: Character, runtime: IAgentRuntime) {
   const clients = [];
@@ -15,6 +16,11 @@ export async function initializeClients(character: Character, runtime: IAgentRun
 
   if (clientTypes.includes('discord')) {
     clients.push(await DiscordClientInterface.start(runtime));
+  }
+
+  if (clientTypes.includes('slack')) {
+    const slackClient = await SlackClientInterface.start(runtime);
+    if (slackClient) clients.push(slackClient);
   }
 
   if (clientTypes.includes('telegram')) {

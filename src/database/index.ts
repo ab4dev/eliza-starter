@@ -5,14 +5,10 @@ import path from 'path';
 
 export function initializeDatabase(dataDir: string) {
   if (process.env.POSTGRES_URL) {
-    const db = new PostgresDatabaseAdapter({
-      connectionString: process.env.POSTGRES_URL,
-    });
-    return db;
+    return new PostgresDatabaseAdapter({ connectionString: process.env.POSTGRES_URL });
   } else {
     const filePath = process.env.SQLITE_FILE ?? path.resolve(dataDir, 'db.sqlite');
     // ":memory:";
-    const db = new SqliteDatabaseAdapter(new Database(filePath));
-    return db;
+    return new SqliteDatabaseAdapter(new Database(filePath));
   }
 }
